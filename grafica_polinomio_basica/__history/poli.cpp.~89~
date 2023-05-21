@@ -1,0 +1,72 @@
+//---------------------------------------------------------------------------
+
+#pragma hdrstop
+
+#include "poli.h"
+#include "math.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+
+void poli::crear(){
+	lon=0;
+}
+void poli::inserta(int coef,int exp)
+{
+	coefi[lon]=coef;
+	expo[lon]=exp;
+	lon++;
+}
+double poli::resultado(int numero)
+{
+  double x;
+  int aux=lon;
+  for(int i=0;i<lon;i++)
+  {
+	x=coefi[i]*pow(numero,expo[i])+x;
+  }
+  return x;
+}
+void poli::Mostrar(TLabel *pol){
+  String cad="";
+  for (int i = lon-1; i > -1; i--) {
+		cad="("+IntToStr(coefi[i])+"x^"+ IntToStr(expo[i])+")"+"+"+cad;
+  }
+  cad="f(x)="+cad ;
+  int aux=cad.Length();
+  cad.Delete(aux,1);
+
+  pol->Caption=cad;
+}
+
+
+
+
+
+void poli::Graficar(TImage *paint){
+	int Maxx=paint->Width;
+	int Maxy=paint->Height;
+	paint->Canvas->Pen->Width=2;
+	paint->Canvas->MoveTo(0,Maxy/2);
+	paint->Canvas->LineTo(Maxx,Maxy/2);
+	paint->Canvas->MoveTo(Maxx/2,0);
+	paint->Canvas->LineTo(Maxx/2,Maxy);
+
+
+  float a=-10,b=10,y=0,posx,posy,fun; //int salto,cont;
+  int cont;
+  for (float x =a; x <b; x+=0.0001) {
+	   cont=0;
+	   fun=0;
+	   //salto=1;
+	   while (cont<=lon-1){
+		 fun=fun+(coefi[cont]*(pow(x,expo[cont])));
+		 cont++;
+		 //salto+=1;
+	   }
+	   y=fun;
+	  posx=x*Maxx/(b-a);
+	  posy=y*Maxy/(b-a);
+	  paint->Canvas->Pixels[Maxx/2+posx][Maxy/2-posy]=clRed;
+  }
+
+}

@@ -1,0 +1,53 @@
+//---------------------------------------------------------------------------
+
+#pragma hdrstop
+
+#include "Graficadora.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+void Graficadora::crear(int vcx, int vcy, int vup, double vdx){
+	cx = vcx;
+	cy = vcy;
+	uPuntos = vup;
+	dx = vdx;
+}
+
+void Graficadora::dibujarEje(TImage *pantalla){
+	cx = pantalla->Width;
+	cy = pantalla->Height;
+	pantalla->Canvas->Pen->Width=2;
+	pantalla->Canvas->MoveTo(0,Maxy/2);
+	pantalla->Canvas->LineTo(Maxx,Maxy/2);
+	pantalla->Canvas->MoveTo(Maxx/2,0);
+	pantalla->Canvas->LineTo(Maxx/2,Maxy);
+}
+
+void   Graficadora::dibujarPunto(TImage *pantalla, double x, double y, int color){
+	int xEntero, xReal, vRx, yEntero, yReal, vRy;
+
+	xEntero = int(x) * uPuntos;
+	xReal = int(x - int(x)) * uPuntos;
+	vRx = cx + (xEntero + xReal);
+
+	yEntero = int(y) * uPuntos;
+	yReal = int(y - int(y)) * uPuntos;
+	vRy = cy - (yEntero + yReal);
+
+	pantalla->Canvas->Pixels[vRx][vRy] = color;
+}
+
+double Graficadora::fx(double x){
+	return x*x;
+}
+
+void Graficadora::graficarFuncion(TImage *pantalla, double a, double b){
+	double x, y;
+
+	dibujarEje(pantalla);
+	x = a;
+	while(x <= b){
+		y = fx(x);
+		dibujarPunto(pantalla, x, y, clRed);
+		x = x + dx;
+	}
+}

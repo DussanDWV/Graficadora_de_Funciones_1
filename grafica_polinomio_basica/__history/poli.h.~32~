@@ -1,0 +1,19 @@
+//---------------------------------------------------------------------------
+
+#ifndef poliH
+#define poliH
+//---------------------------------------------------------------------------
+
+const MaxPoli=100;
+class poli{
+private:
+	int lon;
+	int coefi[MaxPoli];
+	int expo[MaxPoli] ;
+public:
+	void crear();
+	void inserta(int coef,int exp);
+	double resultado(int numero);
+	void Mostrar(TLabel *pol);
+};
+#endif

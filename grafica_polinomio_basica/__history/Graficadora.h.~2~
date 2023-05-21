@@ -1,0 +1,20 @@
+//---------------------------------------------------------------------------
+
+#ifndef GraficadoraH
+#define GraficadoraH
+#include <Vcl.ExtCtrls.hpp>
+#include <Vcl.Graphics.hpp>
+//---------------------------------------------------------------------------
+class Graficadora{
+	private:
+		int cx, cy;
+		int uPuntos;
+		int dx;
+		void dibujarPunto(TCanvas pantalla, double x, double y, int color);
+		void dibujarEje(TCanvas pantalla);
+		double fx(double x);
+	public:
+		void crear(int vcx, int vcy, int vup, double vdx);
+		void graficarFuncion(TCanvas pantalla, double a, double b);
+}
+#endif
